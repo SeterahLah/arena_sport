@@ -401,7 +401,7 @@
     }
 
     function checkout() {
-        fetch("{{ route('checkout') }}", {
+        fetch("{{ route('check') }}", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

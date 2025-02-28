@@ -2,28 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use Midtrans\Snap;
 use App\Models\Cart;
+use Midtrans\Config;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Midtrans\Snap;
-use Midtrans\Config;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
 
     public function index()
     {
-        $cartItems = Cart::where('user_id', auth()->id())->with('produk')->get();
-        $orders = Order::where('user_id', auth()->id())->orderBy('created_at', 'desc')->get();
+        $cartItems = Cart::where('user_id', Auth::user()->id)->with('produk')->get();
+        $orders = Order::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
         return view('orders.produk.index', compact('orders', 'cartItems'));
     }
-    public function checkout(Request $request)
+    public function store(Request $request)
     {
-        $user = auth()->user();
-        $cartItems = Cart::where('user_id', $user->id)->with('produk')->get();
+        $user = Auth::user();
 
+        $cartItems = Cart::where('user_id', $user->id)->with('produk')->get();
         if ($cartItems->isEmpty()) {
             return redirect()->back()->with('error', 'Keranjang belanja kosong!');
         }
@@ -35,8 +36,8 @@ class OrderController extends Controller
         // Buat order baru
         $order = Order::create([
             'user_id' => $user->id,
-            'nama' => $request->nama,
-            'email' => $request->email,
+            'nama' => $user->name,
+            'email' => $user->email,
             'telepon' => $request->telepon,
             'alamat' => $request->alamat,
             'province' => $request->province,
@@ -55,12 +56,12 @@ class OrderController extends Controller
                 'order_id' => $order->id,
                 'product_id' => $item->product_id,
                 'quantity' => $item->quantity,
-                'harga' => $item->price,
+                'price' => $item->harga,
             ]);
         }
 
         // Hapus cart setelah checkout
-        Cart::where('user_id', $user->id)->delete();
+        // Cart::where('user_id', $user->id)->delete();
 
         // Proses Midtrans
         Config::$serverKey = env('MIDTRANS_SERVER_KEY');
@@ -83,9 +84,10 @@ class OrderController extends Controller
             'transaction_details' => $transactionDetails,
             'customer_details' => $customerDetails,
         ];
-
+        // dd($midtransParams);
         $snapToken = Snap::getSnapToken($midtransParams);
+        return redirect()->route('orders.index');
 
-        return view('orders.payment', compact('order', 'snapToken'));
+        // return view('orders.produk.index', compact('order', 'snapToken'));
     }
 }

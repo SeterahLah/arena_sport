@@ -140,7 +140,7 @@
                             $cartItems = \App\Models\Cart::where('user_id', Auth::id())->with('produk')->get();
                             $lapangan = \App\Models\CartLapangan::where('user_id', Auth::id())->with('lapangan')->get();
                             $totalPrice = $cartItems->sum(fn($item) => $item->quantity * $item->harga);
-                            $totalPrice1 = $lapangan ->sum(fn($value) => $value->quantity * $value->harga);
+                            $totalPrice1 = $lapangan->sum(fn($value) => $value->quantity * $value->harga);
                             $totalsemua = $totalPrice + $totalPrice1;
                         @endphp
 
@@ -236,8 +236,9 @@
                                             class="money">${{ number_format($totalsemua, 2) }}</span></span>
                                 </div>
                                 <div class="buttonSet text-center">
-                                    <a href="/checkout/booking/booking" class="btn btn-secondary btn--small">Proses Booking</a>
-                                    <form action="{{ route('checkout') }}" method="POST">
+                                    <a href="/checkout/booking/booking" class="btn btn-secondary btn--small">Proses
+                                        Booking</a>
+                                    <form action="{{ route('check') }}" method="POST">
                                         @csrf
                                         <button type="submit" class="btn btn-secondary btn--small">Checkout</button>
                                     </form>

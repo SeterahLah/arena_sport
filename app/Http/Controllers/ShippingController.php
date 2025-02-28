@@ -35,7 +35,7 @@ class ShippingController extends Controller
         ])->post(env('RAJAONGKIR_BASE_URL') . '/cost', [
             'origin' => 501, // ID kota asal pengiriman (contoh: Yogyakarta)
             'destination' => $request->destination,
-            'weight' => 1000, // Berat dalam gram (ubah sesuai kebutuhan)
+            'weight' => 500, // Berat dalam gram (ubah sesuai kebutuhan)
             'courier' => $request->courier
         ]);
 

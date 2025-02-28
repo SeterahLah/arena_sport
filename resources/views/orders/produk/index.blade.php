@@ -21,78 +21,89 @@
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 sm-margin-30px-bottom">
                 <div class="create-ac-content bg-light-gray padding-20px-all">
                     {{--  --}}
-                    <form action="{{ route('checkout') }}" method="POST">
+                    <form action="{{ route('check') }}" method="POST">
                         @csrf
                         <fieldset>
                             <h2 class="login-title mb-3">Billing details</h2>
                             <div class="row">
-                                <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
-                                    <label for="input-firstname">Nama Lengkap<span
-                                            class="required-f text-danger">*</span></label>
-                                    <input name="nama" value="" id="input-firstname" type="text">
+                                <div class="form-group col-md-6 required">
+                                    <label for="input-firstname">Nama Lengkap<span class="text-danger">*</span></label>
+                                    <input name="nama" id="input-firstname" type="text" class="form-control">
                                 </div>
-                                <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
-                                    <label for="input-lastname">Email<span
-                                            class="required-f text-danger">*</span></label>
-                                    <input name="email" value="" id="input-lastname" type="email">
+                                <div class="form-group col-md-6 required">
+                                    <label for="input-lastname">Email<span class="text-danger">*</span></label>
+                                    <input name="email" id="input-lastname" type="email" class="form-control">
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
-                                    <label for="input-email">No. Handphone/WA <span
-                                            class="required-f text-danger">*</span></label>
-                                    <input name="telepon" value="" id="input-email" type="tel">
+                                <div class="form-group col-md-6 required">
+                                    <label for="input-email">No. Handphone/WA <span class="text-danger">*</span></label>
+                                    <input name="telepon" id="input-email" type="tel" class="form-control">
                                 </div>
-                                <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
-                                    <label for="input-telephone">Alamat Lengkap<span
-                                            class="required-f text-danger">*</span></label>
-                                    <input name="telephone" value="" id="input-telephone" type="text">
-                                    <small>silakan masukan alamat anda secara detail seperti RT/RW dan detail posisi
-                                        alamat anda</small>
-                                </div>
-                                <div class="form-group col-md-6 col-lg-6 col-xl-6">
-                                    <label for="courier" class="form-label">Kurir</label>
-                                    <select id="courier" name="courier" class="form-control" required>
-                                        <option value=""> --- Pilih Ekpedisi --- </option>
-                                        <option value="jne">JNE</option>
-                                        <option value="tiki">TIKI</option>
-                                        <option value="pos">POS Indonesia</option>
+                                <div class="form-group col-md-6 required">
+                                    <label for="origin_province">Provinsi Asal <span
+                                            class="text-danger">*</span></label>
+                                    <select name="origin_province" id="origin_province" class="form-control">
+                                        <option value="">Pilih Provinsi</option>
                                     </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6 required">
+                                    <label for="origin_city">Kota Asal<span class="text-danger">*</span></label>
+                                    <select id="origin_city" name="origin_city" class="form-control">
+                                        <option value="">Pilih Kota</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6 required">
+                                    <label for="input-telephone">Alamat Lengkap<span
+                                            class="text-danger">*</span></label>
+                                    <input name="alamat" id="input-telephone" type="text" class="form-control">
+                                    <small>Silakan masukkan alamat detail seperti RT/RW dan patokan.</small>
                                 </div>
                             </div>
                         </fieldset>
 
                         <fieldset>
                             <div class="row">
-                                <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
-                                    <label for="input-country">Provinsi <span
-                                            class="required-f text-danger">*</span></label>
-                                    <select name="provinsi" id="province" class="form-control" required>
-                                        <option value="province">Pilih Provinsi</option>
+                                <div class="form-group col-md-6 required">
+                                    <label for="destination_province">Provinsi Tujuan <span
+                                            class="text-danger">*</span></label>
+                                    <select name="destination_province" id="destination_province" class="form-control">
+                                        <option value="">Pilih Provinsi</option>
                                     </select>
                                 </div>
-                                <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
-                                    <label for="shipping_cost" class="form-label">Ongkos Kirim</label>
-                                    <input type="text" id="shipping_cost" name="shipping_cost" class="form-control"
-                                        readonly>
-                                    </h4>
+                                <div class="form-group col-md-6 required">
+                                    <label for="destination_city">Kota Tujuan<span class="text-danger">*</span></label>
+                                    <select id="destination_city" name="destination_city" class="form-control">
+                                        <option value="">Pilih Kota</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="form-group col-md-6 col-lg-6 col-xl-6 required">
-                                    <label for="input-zone">Kota<span class="required-f text-danger">*</span></label>
-                                    <select id="city" name="destination" class="form-control" required>
-                                        <option value="destination">Pilih Kota</option>
+                                <div class="form-group col-md-6 required">
+                                    <label for="courier">Kurir</label>
+                                    <select id="courier" name="courier" class="form-control">
+                                        <option value="">--- Pilih Ekspedisi ---</option>
+                                        <option value="jne">JNE</option>
+                                        <option value="tiki">TIKI</option>
+                                        <option value="pos">POS Indonesia</option>
                                     </select>
+                                </div>
+                                <div class="form-group col-md-6 required">
+                                    <label for="shipping_cost">Ongkos Kirim</label>
+                                    <input type="text" id="shipping_cost" name="shipping_cost" class="form-control"
+                                        readonly>
                                 </div>
                             </div>
                         </fieldset>
+
                         <fieldset>
                             <div class="row">
-                                <div class="form-group col-md-12 col-lg-12 col-xl-12">
+                                <div class="form-group col-md-12">
                                     <label for="input-company">Catatan Pesanan</label>
-                                    <textarea class="form-control resize-both" rows="3"></textarea>
-                                    <small>Masukan Catatan Tambahan Untuk Pesanan anda jika diperlukan (options)</small>
+                                    <textarea class="form-control resize-both" rows="3" name="catatan"></textarea>
+                                    <small>Masukkan catatan tambahan jika diperlukan.</small>
                                 </div>
                             </div>
                         </fieldset>
@@ -115,19 +126,19 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($cartItems as $value)
-                                    <tr>
-                                        <td>{{ $value->produk->nama }}</td>
-                                        <td>{{ $value->quantity }}</td>
-                                        <td>${{ $value->harga }}</td>
-                                        <td>${{ $value->quantity * $value->harga }}</td>
-                                    </tr>
+                                    @foreach ($cartItems as $value)
+                                        <tr>
+                                            <td>{{ $value->produk->nama }}</td>
+                                            <td>{{ $value->quantity }}</td>
+                                            <td>${{ $value->harga }}</td>
+                                            <td id="subtotal_result">${{ $value->quantity * $value->harga }}</td>
+                                        </tr>
                                     @endforeach
                                 </tbody>
                                 <tfoot class="font-weight-600">
                                     <tr>
                                         <td colspan="3" class="text-right">Total</td>
-                                        <td>Rp. </td>
+                                        <td id="total_result">Rp. </td>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -254,41 +265,59 @@
         </div>
     </div>
     {{-- provinsi dan kota --}}
-<script>
+    <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // Ambil daftar provinsi
-        fetch('/provinces')
-            .then(response => response.json())
-            .then(data => {
-                let options = '<option value="">Pilih Provinsi</option>';
-                data.rajaongkir.results.forEach(province => {
-                    options +=
-                        `<option value="${province.province_id}">${province.province}</option>`;
-                });
-                document.getElementById("province").innerHTML = options;
-            });
-
-        // Ambil daftar kota berdasarkan provinsi yang dipilih
-        document.getElementById("province").addEventListener("change", function() {
-            let provinceId = this.value;
-            fetch(`/cities/${provinceId}`)
+        function fetchProvinces(selectElementId) {
+            fetch('/provinces')
                 .then(response => response.json())
                 .then(data => {
-                    let options = '<option value="">Pilih Kota</option>';
-                    data.rajaongkir.results.forEach(city => {
-                        options +=
-                            `<option value="${city.city_id}">${city.city_name}</option>`;
+                    let options = '<option value="">Pilih Provinsi</option>';
+                    data.rajaongkir.results.forEach(province => {
+                        options += `<option value="${province.province_id}">${province.province}</option>`;
                     });
-                    document.getElementById("city").innerHTML = options;
+                    document.getElementById(selectElementId).innerHTML = options;
                 });
-        });
+        }
 
-        // Hitung biaya ongkir
-        document.getElementById("courier").addEventListener("change", function() {
-            let destination = document.getElementById("city").value;
-            let courier = this.value;
+        function fetchCities(provinceSelectId, citySelectId) {
+            document.getElementById(provinceSelectId).addEventListener("change", function() {
+                let provinceId = this.value;
+                fetch(`/cities/${provinceId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        let options = '<option value="">Pilih Kota</option>';
+                        data.rajaongkir.results.forEach(city => {
+                            options += `<option value="${city.city_id}">${city.city_name}</option>`;
+                        });
+                        document.getElementById(citySelectId).innerHTML = options;
+                    });
+            });
+        }
 
-            if (kota) {
+        function calculateSubtotal() {
+            let subtotals = document.querySelectorAll("#subtotal_result");
+            let totalSubtotal = 0;
+
+            subtotals.forEach(subtotal => {
+                totalSubtotal += parseFloat(subtotal.textContent.replace(/[^0-9.-]+/g, "")) || 0;
+            });
+
+            return totalSubtotal;
+        }
+
+        function updateTotal() {
+            let subtotal = calculateSubtotal();
+            let shippingCost = parseFloat(document.getElementById("shipping_cost").value.replace(/[^0-9.-]+/g, "")) || 0;
+            let total = subtotal + shippingCost;
+
+            document.getElementById("total_result").textContent = "Rp " + total.toLocaleString();
+        }
+
+        function getShippingCost() {
+            let destination = document.getElementById("destination_city").value;
+            let courier = document.getElementById("courier").value;
+
+            if (destination && courier) {
                 fetch('/shipping-cost', {
                         method: 'POST',
                         headers: {
@@ -296,21 +325,47 @@
                             'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
                         },
                         body: JSON.stringify({
-                            destination,
-                            courier
+                            destination: destination,
+                            courier: courier
                         })
                     })
                     .then(response => response.json())
                     .then(data => {
-                        let cost = data.rajaongkir.results[0].costs[0].cost[0].value;
-                        document.getElementById("shipping_cost").value = cost;
-                        document.getElementById("totalPrice").textContent = (parseFloat(
-                            "") + cost).toFixed(2);
+                        let results = data.rajaongkir.results;
+                        if (results.length > 0) {
+                            let cost = results[0].costs[0].cost[0].value;
+                            document.getElementById("shipping_cost").value = "Rp " + cost;
+                        } else {
+                            document.getElementById("shipping_cost").value = "Data tidak tersedia";
+                        }
+                        updateTotal(); // Perbarui total setelah ongkos kirim didapat
+                    })
+                    .catch(error => {
+                        document.getElementById("shipping_cost").value = "Gagal mengambil data";
+                        updateTotal();
                     });
+            } else {
+                document.getElementById("shipping_cost").value = "";
+                updateTotal();
             }
-        });
+        }
+
+        // Load data provinsi & kota
+        fetchProvinces("origin_province");
+        fetchProvinces("destination_province");
+
+        fetchCities("origin_province", "origin_city");
+        fetchCities("destination_province", "destination_city");
+
+        // Hitung subtotal awal
+        updateTotal();
+
+        // Hitung ongkos kirim otomatis saat kota tujuan atau kurir berubah
+        document.getElementById("destination_city").addEventListener("change", getShippingCost);
+        document.getElementById("courier").addEventListener("change", getShippingCost);
     });
 </script>
+
 
 </div>
 <!--End Body Content-->

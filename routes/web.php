@@ -207,11 +207,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 Route::post('/admin/login', [AdminController::class, 'login'])->name('login.admin');
 Route::post('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/admin/transaksi', [TransaksiProdukController::class, 'index'])->name('transaksi.index');
-    Route::get('/transaksi/checkout/{id}', [TransaksiProdukController::class, 'checkout'])->name('transaksi.checkout');
-    Route::post('/transaksi/store', [TransaksiProdukController::class, 'store'])->name('transaksi.store');
-});
+// Route::middleware(['auth'])->group(function () {
+//     Route::get('/admin/transaksi', [OrderController::class, 'index'])->name('transaksi.index');
+//     Route::get('/transaksi/checkout/{id}', [OrderController::class, 'checkout'])->name('transaksi.checkout');
+//     Route::post('/transaksi/store', [OrderController::class, 'store'])->name('transaksi.store');
+// });
 
 /// masuk keranjang
 Route::middleware('auth')->group(function () {
@@ -258,9 +258,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/{id}/update', [CartController::class, 'update'])->name('cart.update');
     Route::post('/cart/{id}/remove', [CartController::class, 'remove'])->name('cart.remove');
-    Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-    Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
+    Route::post('/check', [OrderController::class, 'store'])->name('check');
+    // Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
 
     Route::get('/payment/{orderId}', [PaymentController::class, 'processPayment'])->name('payment.process');
     Route::post('/midtrans/callback', [PaymentController::class, 'callback'])->name('payment.callback');

@@ -19,7 +19,7 @@ class CartController extends Controller
     public function __construct()
     {
         View::composer('*', function ($view) {
-            $user = auth()->user();
+            $user = Auth::user();
             if ($user) {
                 $cartItems = Cart::where('user_id', $user->id)->with('product')->get();
                 $total = $cartItems->sum(fn($item) => $item->quantity * $item->price);
@@ -40,7 +40,7 @@ class CartController extends Controller
     public function addToCart(Request $request)
     {
         $produk = Produk::findOrFail($request->product_id);
-        $user = auth()->user();
+        $user = Auth::user();
 
         $cart = Cart::updateOrCreate(
             [

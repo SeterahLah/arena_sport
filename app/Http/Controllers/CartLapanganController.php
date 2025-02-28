@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CartLapangan;
+use DB;
 use App\Models\Lapangan;
+use App\Models\CartLapangan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,7 +21,7 @@ class CartLapanganController extends Controller
     public function addToCart1(Request $request)
     {
         $lapangan = Lapangan::findOrFail($request->lapangan_id);
-        $user = auth()->user();
+        $user = Auth::user();
 
         $cartlapangan = CartLapangan::updateOrCreate(
             [
