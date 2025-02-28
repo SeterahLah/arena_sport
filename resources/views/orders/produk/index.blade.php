@@ -21,7 +21,7 @@
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 sm-margin-30px-bottom">
                 <div class="create-ac-content bg-light-gray padding-20px-all">
                     {{--  --}}
-                    <form action="{{ route('checkout.store') }}" method="POST">
+                    <form action="{{ route('checkout') }}" method="POST">
                         @csrf
                         <fieldset>
                             <h2 class="login-title mb-3">Billing details</h2>
@@ -51,16 +51,6 @@
                                         alamat anda</small>
                                 </div>
                                 <div class="form-group col-md-6 col-lg-6 col-xl-6">
-                                    <label for="input-country">Metode Pembayaran<span
-                                            class="required-f text-danger">*</span></label>
-                                    <select name="metode_pembayaran" id="input-country" class="">
-                                        <option value=""> --- Pilih Bank --- </option>
-                                        @foreach ($bank as $value)
-                                            <option value="{{ $value->nama_bank }}">{{ $value->nama_bank }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-6 col-lg-6 col-xl-6">
                                     <label for="courier" class="form-label">Kurir</label>
                                     <select id="courier" name="courier" class="form-control" required>
                                         <option value=""> --- Pilih Ekpedisi --- </option>
@@ -85,7 +75,6 @@
                                     <label for="shipping_cost" class="form-label">Ongkos Kirim</label>
                                     <input type="text" id="shipping_cost" name="shipping_cost" class="form-control"
                                         readonly>
-                                    <h4>Total Price: $<span id="totalPrice">{{ number_format($totalPrice, 2) }}</span>
                                     </h4>
                                 </div>
                             </div>
@@ -126,19 +115,19 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($cartItems as $item)
+                                    @foreach($cartItems as $value)
                                     <tr>
-                                        <td>{{ $item->produk->name }}</td>
-                                        <td>{{ $item->quantity }}</td>
-                                        <td>${{ $item->harga }}</td>
-                                        <td>${{ $item->quantity * $item->price }}</td>
+                                        <td>{{ $value->produk->nama }}</td>
+                                        <td>{{ $value->quantity }}</td>
+                                        <td>${{ $value->harga }}</td>
+                                        <td>${{ $value->quantity * $value->harga }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>
                                 <tfoot class="font-weight-600">
                                     <tr>
                                         <td colspan="3" class="text-right">Total</td>
-                                        <td>Rp. {{ $totalPrice }}</td>
+                                        <td>Rp. </td>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -316,7 +305,7 @@
                         let cost = data.rajaongkir.results[0].costs[0].cost[0].value;
                         document.getElementById("shipping_cost").value = cost;
                         document.getElementById("totalPrice").textContent = (parseFloat(
-                            "{{ $totalPrice }}") + cost).toFixed(2);
+                            "") + cost).toFixed(2);
                     });
             }
         });

@@ -8,16 +8,31 @@ use App\Models\Produk;
 use App\Models\CartLapangan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 
 
 class CartController extends Controller
 {
+
+
+
+    public function __construct()
+    {
+        View::composer('*', function ($view) {
+            $user = auth()->user();
+            if ($user) {
+                $cartItems = Cart::where('user_id', $user->id)->with('product')->get();
+                $total = $cartItems->sum(fn($item) => $item->quantity * $item->price);
+                $view->with(compact('cartItems', 'total'));
+            }
+        });
+    }
     // Menampilkan cart berdasarkan user login
     // Menampilkan cart
     public function index()
     {
         $cartItems = Cart::where('user_id', Auth::id())->with('produk')->get();
-        $totalPrice = $cartItems->sum(fn ($item) => $item->quantity * $item->harga);
+        $totalPrice = $cartItems->sum(fn($item) => $item->quantity * $item->harga);
         return view('layout.navbar', compact('cartItems', 'totalPrice'));
     }
 
@@ -64,7 +79,7 @@ class CartController extends Controller
     public function checkout()
     {
         $cartItems = Cart::where('user_id', Auth::id())->get();
-        $totalPrice = $cartItems->sum(fn ($item) => $item->quantity * $item->price);
+        $totalPrice = $cartItems->sum(fn($item) => $item->quantity * $item->price);
 
         // Proses pembayaran atau simpan ke orders table
 

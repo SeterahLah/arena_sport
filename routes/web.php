@@ -15,6 +15,7 @@ use App\Http\Controllers\InfoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\BelanjaController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\MarqueeController;
 use App\Http\Controllers\PartnerController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\LapanganController;
 use App\Http\Controllers\ShippingController;
@@ -246,8 +248,20 @@ Route::middleware('auth')->group(function () {
 
 //checkout
 
-Route::middleware('auth')->group(function () {
-    Route::get('/checkout/produk', [CheckoutController::class, 'index'])->name('checkout');
-    Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
-    Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
+// Route::middleware('auth')->group(function () {
+//     Route::get('/checkout/produk', [CheckoutController::class, 'index'])->name('checkout');
+//     Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+//     Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
+// });
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/{id}/update', [CartController::class, 'update'])->name('cart.update');
+    Route::post('/cart/{id}/remove', [CartController::class, 'remove'])->name('cart.remove');
+    Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
+
+    Route::get('/payment/{orderId}', [PaymentController::class, 'processPayment'])->name('payment.process');
+    Route::post('/midtrans/callback', [PaymentController::class, 'callback'])->name('payment.callback');
 });

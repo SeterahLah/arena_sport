@@ -237,8 +237,10 @@
                                 </div>
                                 <div class="buttonSet text-center">
                                     <a href="/checkout/booking/booking" class="btn btn-secondary btn--small">Proses Booking</a>
-                                    <a href="/checkout/produk"
-                                        class="btn btn-secondary btn--small">Proses Produk</a>
+                                    <form action="{{ route('checkout') }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-secondary btn--small">Checkout</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

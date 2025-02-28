@@ -13,23 +13,23 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->nullable(); // Jika user login
-            $table->string('nama');
-            $table->string('email');
-            $table->string('telepon');
-            $table->text('alamat');
-            $table->string('provinsi');
-            $table->string('destination');
-            $table->string('courier');
-            $table->text('catatan');
-            $table->string('resi_pengiriman')->nullable();
-            $table->decimal('shipping_cost', 10, 2);
-            $table->decimal('total_harga', 10, 2);
-            $table->string('midtrans_order_id');
-            $table->enum('status', ['pending', 'processing', 'completed', 'cancelled'])->default('pending');
-            $table->timestamps();
+    $table->unsignedBigInteger('user_id')->nullable();
+    $table->string('nama');
+    $table->string('email');
+    $table->string('telepon');
+    $table->text('alamat');
+    $table->string('province');
+    $table->string('destination');
+    $table->string('courier');
+    $table->text('catatan')->nullable();
+    $table->string('resi_pengiriman')->nullable();
+    $table->decimal('shipping_cost', 10, 2);
+    $table->decimal('total_harga', 10, 2);
+    $table->string('midtrans_order_id')->unique();
+    $table->enum('status', ['pending', 'processing', 'completed', 'cancelled'])->default('pending');
+    $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+    $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
